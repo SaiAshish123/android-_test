@@ -1,5 +1,7 @@
 package net.exercise.ui.movies
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +21,7 @@ class AlbumFragment : Fragment(), RecyclerViewClickListener{
 
     private lateinit var factory: AlbumViewModelFactory
     private lateinit var viewModel: AlbumViewModel
-
+    private val sharedPrefFile = "kotlinsharedpreference"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +31,8 @@ class AlbumFragment : Fragment(), RecyclerViewClickListener{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
 
         val api = AlbumApi()
         val repository = AlbumRepository(api)
@@ -36,9 +40,9 @@ class AlbumFragment : Fragment(), RecyclerViewClickListener{
         factory = AlbumViewModelFactory(repository)
         viewModel = ViewModelProviders.of(this, factory).get(AlbumViewModel::class.java)
 
-        viewModel.getMovies()
+        viewModel.getAlbums()
 
-        viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
+        viewModel.live_album.observe(viewLifecycleOwner, Observer { movies ->
             recycler_view_movies.also {
                 it.layoutManager = LinearLayoutManager(requireContext())
                 it.setHasFixedSize(true)

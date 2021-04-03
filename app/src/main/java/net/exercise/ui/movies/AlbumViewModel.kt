@@ -14,14 +14,14 @@ class AlbumViewModel(
 
     private lateinit var job: Job
 
-    private val _movies = MutableLiveData<List<AlbumItem>>()
-    val movies: LiveData<List<AlbumItem>>
-        get() = _movies
+    private val albums_mutable = MutableLiveData<List<AlbumItem>>()
+    val live_album: LiveData<List<AlbumItem>>
+        get() = albums_mutable
 
-    fun getMovies() {
+    fun getAlbums() {
         job = Coroutines.ioThenMain(
             { repository.getAlbum() },
-            { _movies.value = it }
+            { albums_mutable.value = it }
         )
     }
 

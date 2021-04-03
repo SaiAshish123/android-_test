@@ -26,7 +26,8 @@ class AlbumsAdapter (
         )
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        holder.recyclerviewAlbumBinding.album = albumslst[position]
+        var sortedList = albumslst.sortedWith(compareBy({ it.title }))
+        holder.recyclerviewAlbumBinding.album = sortedList[position]
 
     }
 
