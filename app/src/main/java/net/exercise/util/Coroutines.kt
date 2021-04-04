@@ -5,6 +5,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+/**
+ * @author Ashish
+ * This Util class is used Coroutine Scopes for which Kind of Thread it will call
+ */
 object Coroutines {
 
     fun<T: Any> ioThenMain(work: suspend (() -> T?), callback: ((T?)->Unit)) =
